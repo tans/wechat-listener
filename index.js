@@ -16,13 +16,15 @@ const bot = WechatyBuilder.build({
 
 bot.on("message", async (msg) => {
     let text = msg.text();
-    if (matchReg.test(text)) {
+    console.log(text);
+    if (process.env.REMOTE_API && matchReg.test(text)) {
         try {
             await axios.post(process.env.REMOTE_API, { text });
+            console.log("------sended");
         } catch (error) {
             console.error(error);
         }
     }
 });
 
-bot.start().then(console.log).error(console.error);
+bot.start().catch(console.error);
