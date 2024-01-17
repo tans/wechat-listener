@@ -15,11 +15,15 @@ const bot = WechatyBuilder.build({
 });
 
 bot.on("message", async (msg) => {
+    if (msg.type != Wechaty.types.Message.Text) {
+        return;
+    }
+
     let text = msg.text();
     console.log(text);
     if (process.env.REMOTE_API && matchReg.test(text)) {
         try {
-            await axios.post(process.env.REMOTE_API, { text });
+            await axios.post(process.env.REMOTE_API, { text, msg.room });
             console.log("------sended");
         } catch (error) {
             console.error(error);
