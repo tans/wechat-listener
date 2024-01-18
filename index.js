@@ -25,6 +25,8 @@ bot.on("message", async (msg) => {
         try {
             await axios.post(process.env.REMOTE_API, { text, msg.room });
             console.log("------sended");
+            msg.say('线索已收录')
+
         } catch (error) {
             console.error(error);
         }
