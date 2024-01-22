@@ -1,6 +1,6 @@
 const Wechaty = require("wechaty");
 const axios = require("axios");
-require("dotenv");
+require("dotenv").config();
 const { PuppetXp } = require("wechaty-puppet-xp");
 
 const puppet = new PuppetXp();
@@ -23,10 +23,10 @@ bot.on("message", async (msg) => {
     console.log(text);
     if (process.env.REMOTE_API && matchReg.test(text)) {
         try {
-            await axios.post(process.env.REMOTE_API, { text, msg.room });
+            await axios.post(process.env.REMOTE_API, { text });
             console.log("------sended");
-            msg.say('线索已收录')
-
+            let { message } = await res.json();
+            msg.say("线索已收录");
         } catch (error) {
             console.error(error);
         }
